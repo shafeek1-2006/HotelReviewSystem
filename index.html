@@ -1,45 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Review System</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to CSS file for styling -->
-</head>
-<body>
+<form id="reviewForm">
+  <!-- Form content -->
+</form>
+<div id="reviews"></div>
 
-    <h1>Hotel Review System</h1>
-
-    <!-- Review Submission Form -->
-    <form id="reviewForm">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required aria-label="Your Name">
-        
-        <label for="rating">Rating:</label>
-        <select id="rating" name="rating" required aria-label="Rate the hotel">
-            <option value="5">5 Stars</option>
-            <option value="4">4 Stars</option>
-            <option value="3">3 Stars</option>
-            <option value="2">2 Stars</option>
-            <option value="1">1 Star</option>
-        </select>
-        
-        <label for="review">Review:</label>
-        <textarea id="review" name="review" rows="4" required aria-label="Your Review"></textarea>
-        
-        <button type="submit">Submit Review</button>
-    </form>
-
-    <h2>Customer Reviews</h2>
-    
-    <!-- Reviews will be dynamically displayed here -->
-    <div id="reviews">
-        <!-- Reviews will be displayed here by JavaScript -->
-    </div>
-
-    <!-- Optional: Confirmation message for the user after submitting -->
-    <div id="confirmationMessage" style="display: none; color: green;">Review Submitted Successfully!</div>
-
-    <script src="script.js" defer></script> <!-- Link to JavaScript file for functionality -->
-</body>
-</html>
