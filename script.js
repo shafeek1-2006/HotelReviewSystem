@@ -1,44 +1,37 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
+document.addEventListener("DOMContentLoaded", loadReviews);
+
+document.getElementById('reviewForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const name = document.getElementById('name').value;
+    const rating = document.getElementById('rating').value;
+    const review = document.getElementById('review').value;
+
+    addReview(name, rating, review);
+    saveReview(name, rating, review);
+    clearForm();
+});
+
+function addReview(name, rating, review) {
+    const reviewsContainer = document.getElementById('reviews');
+    const reviewItem = document.createElement('div');
+    reviewItem.classList.add('review-item');
+    reviewItem.innerHTML = `<h3>${name} - ${rating} Stars</h3><p>${review}</p>`;
+    reviewsContainer.appendChild(reviewItem);
 }
 
-.container {
-    width: 100%;
-    max-width: 600px;
-    padding: 20px;
-    background: #fff;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-    border-radius: 8px;
+function clearForm() {
+    document.getElementById('name').value = '';
+    document.getElementById('rating').value = '5';
+    document.getElementById('review').value = '';
 }
 
-h1 {
-    color: #4CAF50;
+function saveReview(name, rating, review) {
+    const existingReviews = JSON.parse(localStorage.getItem('reviews')) || [];
+    existingReviews.push({ name, rating, review });
+    localStorage.setItem('reviews', JSON.stringify(existingReviews));
 }
 
-.review-item {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-    margin: 10px 0;
-    background-color: #f1f1f1;
-    border-radius: 5px;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #45a049;
+function loadReviews() {
+    const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+    reviews.forEach(review => addReview(review.name, review.rating, review.review));
 }
