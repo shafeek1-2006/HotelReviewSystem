@@ -1,33 +1,44 @@
-// JavaScript to handle form submission and display reviews
-document.getElementById('reviewForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevents form from refreshing the page
-
-    const name = document.getElementById('name').value;
-    const rating = document.getElementById('rating').value;
-    const review = document.getElementById('review').value;
-
-    addReview(name, rating, review); // Call function to add review
-    clearForm(); // Clear form inputs after submission
-});
-
-// Function to add review to the reviews section
-function addReview(name, rating, review) {
-    const reviewsContainer = document.getElementById('reviews');
-
-    const reviewItem = document.createElement('div');
-    reviewItem.classList.add('review-item');
-
-    reviewItem.innerHTML = `
-        <h3>${name} - ${rating} Stars</h3>
-        <p>${review}</p>
-    `;
-
-    reviewsContainer.appendChild(reviewItem); // Add new review to the reviews container
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
 }
 
-// Function to clear form inputs
-function clearForm() {
-    document.getElementById('name').value = '';
-    document.getElementById('rating').value = '5';
-    document.getElementById('review').value = '';
+.container {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    color: #4CAF50;
+}
+
+.review-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    margin: 10px 0;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
 }
