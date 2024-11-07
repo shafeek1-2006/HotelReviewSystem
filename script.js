@@ -1,3 +1,19 @@
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyASDqLWAJ6AEcpNUuwT2lSaPGGcHAkARSE",
+    authDomain: "hotel-review-system-15430.firebaseapp.com",
+    projectId: "hotel-review-system-15430",
+    storageBucket: "hotel-review-system-15430.firebasestorage.app",
+    messagingSenderId: "31016766719",
+    appId: "1:31016766719:web:a1853a9e0a33e40113d0ca",
+    measurementId: "G-S4M0DB2MG9"
+};
+
+// Initialize Firebase and Firestore
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Load reviews from Firestore on page load
 document.addEventListener("DOMContentLoaded", loadReviews);
 
 document.getElementById('reviewForm').addEventListener('submit', function(event) {
@@ -6,8 +22,8 @@ document.getElementById('reviewForm').addEventListener('submit', function(event)
     const rating = document.getElementById('rating').value;
     const review = document.getElementById('review').value;
 
-    addReview(name, rating, review);
-    saveReview(name, rating, review);
+    addReview(name, rating, review);  // Update the page with the new review
+    saveReview(name, rating, review); // Save the review to Firestore
     clearForm();
 });
 
@@ -19,19 +35,37 @@ function addReview(name, rating, review) {
     reviewsContainer.appendChild(reviewItem);
 }
 
+// Clear the review form after submission
 function clearForm() {
     document.getElementById('name').value = '';
     document.getElementById('rating').value = '5';
     document.getElementById('review').value = '';
 }
 
+// Save the review to Firestore
 function saveReview(name, rating, review) {
-    const existingReviews = JSON.parse(localStorage.getItem('reviews')) || [];
-    existingReviews.push({ name, rating, review });
-    localStorage.setItem('reviews', JSON.stringify(existingReviews));
+    db.collection("reviews").add({
+        name: name,
+        rating: rating,
+        review: review,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then((docRef) => {
+        console.log("Review added with ID: ", docRef.id);
+    })
+    .catch((error) => {
+        console.error("Error adding review: ", error);
+    });
 }
 
+// Load reviews from Firestore and display them
 function loadReviews() {
-    const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
-    reviews.forEach(review => addReview(review.name, review.rating, review.review));
+    db.collection("reviews").orderBy("timestamp", "desc").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            const reviewData = doc.data();
+            addReview(reviewData.name, reviewData.rating, reviewData.review);
+        });
+    }).catch((error) => {
+        console.error("Error loading reviews: ", error);
+    });
 }
