@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Review System</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to CSS file for styling -->
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js"></script>
+    <!-- Optional: Firebase Analytics (remove if not using) -->
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-analytics.js"></script>
 </head>
 <body>
 
@@ -41,6 +47,29 @@
     <div id="confirmationMessage" style="display: none; color: green;">Review Submitted Successfully!</div>
 
     <script src="script.js" defer></script> <!-- Link to JavaScript file for functionality -->
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyASDqLWAJ6AEcpNUuwT2lSaPGGcHAkARSE",
+    authDomain: "hotel-review-system-15430.firebaseapp.com",
+    projectId: "hotel-review-system-15430",
+    storageBucket: "hotel-review-system-15430.firebasestorage.app",
+    messagingSenderId: "31016766719",
+    appId: "1:31016766719:web:a1853a9e0a33e40113d0ca",
+    measurementId: "G-S4M0DB2MG9"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 </body>
 </html>
 
