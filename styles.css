@@ -22,12 +22,24 @@ h1 {
     color: #4CAF50;
 }
 
-.review-item {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-    margin: 10px 0;
-    background-color: #f1f1f1;
-    border-radius: 5px;
+.welcome-message {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+input[type="text"], select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 button {
@@ -36,9 +48,34 @@ button {
     border: none;
     padding: 10px;
     cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
     transition: background-color 0.3s;
 }
 
 button:hover {
     background-color: #45a049;
+}
+
+.review-section {
+    margin-top: 20px;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+h3 {
+    color: #4CAF50;
+    margin-top: 0;
+}
+
+.reviews-list {
+    margin-top: 10px;
+}
+
+.review-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    margin: 5px 0;
 }
