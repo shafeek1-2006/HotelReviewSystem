@@ -62,6 +62,7 @@ button:hover {
 .review-summary {
     margin-bottom: 20px;
     font-size: 16px;
+    color: #333;
 }
 
 table {
@@ -86,4 +87,19 @@ table tr:hover {
 
 table td {
     font-size: 14px;
+}
+
+.good-review {
+    background-color: #c8e6c9;
+    color: #2e7d32;
+}
+
+.average-review {
+    background-color: #fff9c4;
+    color: #fbc02d;
+}
+
+.bad-review {
+    background-color: #ffebee;
+    color: #d32f2f;
 }
