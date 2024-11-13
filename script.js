@@ -7,7 +7,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyASDqLWAJ6AEcpNUuwT2lSaPGGcHAkARSE",
   authDomain: "hotel-review-system-15430.firebaseapp.com",
   projectId: "hotel-review-system-15430",
-  storageBucket: "hotel-review-system-15430",
+  storageBucket: "hotel-review-system-15430.appspot.com",
   messagingSenderId: "31016766719",
   appId: "1:31016766719:web:a1853a9e0a33e40113d0ca",
   measurementId: "G-S4M0DB2MG9"
@@ -25,7 +25,11 @@ document.getElementById('reviewForm').addEventListener('submit', async function(
     const rating = parseInt(document.getElementById('rating').value);
     const review = document.getElementById('review').value;
 
-    await saveReview(name, rating, review);
+    if (name && review && rating) {
+        await saveReview(name, rating, review);
+    } else {
+        alert("Please fill all fields before submitting the review.");
+    }
 
     document.getElementById('name').value = '';
     document.getElementById('rating').value = '5';
