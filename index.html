@@ -33,15 +33,25 @@
         </form>
 
         <h2>Customer Reviews</h2>
+        
+        <table id="reviewsTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Rating</th>
+                    <th>Review</th>
+                    <th>Review Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Reviews will be dynamically added here -->
+            </tbody>
+        </table>
 
         <div class="review-summary">
             <p>Good Reviews: <span id="goodReviewsCount">0</span></p>
             <p>Average Reviews: <span id="averageReviewsCount">0</span></p>
             <p>Bad Reviews: <span id="badReviewsCount">0</span></p>
-        </div>
-
-        <div id="reviewsList">
-            <!-- Reviews will be dynamically added here -->
         </div>
     </div>
 
