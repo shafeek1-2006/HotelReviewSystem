@@ -1,3 +1,4 @@
+// Firebase Configuration
 const firebaseConfig = {
     apiKey: "YOUR_FIREBASE_API_KEY",
     authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
@@ -48,6 +49,7 @@ document.getElementById("reviewForm").addEventListener("submit", function (event
         badReviewsCount++;
     }
 
+    // Save the review data to Firebase
     const reviewData = {
         name: name,
         rating: rating,
@@ -58,25 +60,31 @@ document.getElementById("reviewForm").addEventListener("submit", function (event
     const newReviewKey = firebase.database().ref().child('reviews').push().key;
     firebase.database().ref('reviews/' + newReviewKey).set(reviewData);
 
+    // Update review counts
     document.getElementById("goodReviewsCount").textContent = goodReviewsCount;
     document.getElementById("averageReviewsCount").textContent = averageReviewsCount;
     document.getElementById("badReviewsCount").textContent = badReviewsCount;
 
+    // Reset form after submission
     document.getElementById("reviewForm").reset();
 });
 
+// Function to load reviews from Firebase
 function loadReviews() {
     firebase.database().ref('reviews').on('value', function(snapshot) {
         const reviews = snapshot.val();
-        const reviewsContainer = document.getElementById("reviewsContainer");
-        reviewsContainer.innerHTML = ''; // Clear the container
+        const reviewsList = document.getElementById("reviewsList");
+        reviewsList.innerHTML = ''; // Clear the reviews list
 
         let index = 1;
         for (let key in reviews) {
             const reviewData = reviews[key];
-            const reviewElement = document.createElement("div");
-            let reviewClass = '';
 
+            // Create review display
+            const reviewElement = document.createElement("div");
+            reviewElement.classList.add("review");
+
+            let reviewClass = '';
             if (reviewData.reviewType === "Good") {
                 reviewClass = 'good-review';
             } else if (reviewData.reviewType === "Average") {
@@ -85,17 +93,18 @@ function loadReviews() {
                 reviewClass = 'bad-review';
             }
 
-            reviewElement.className = 'review ' + reviewClass;
+            reviewElement.className = reviewClass;
             reviewElement.innerHTML = `
                 <h3>Review #${index++}</h3>
-                <p><strong>${reviewData.name}</strong> - ${reviewData.rating} Stars</p>
+                <p><strong>${reviewData.name}</strong> (${reviewData.rating} Stars)</p>
                 <p>${reviewData.review}</p>
                 <p>Type: ${reviewData.reviewType}</p>
-                <p>Score: ${reviewData.points}</p>
             `;
-            reviewsContainer.appendChild(reviewElement);
+
+            reviewsList.appendChild(reviewElement);
         }
     });
 }
 
+// Load reviews when the page loads
 loadReviews();
