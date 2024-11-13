@@ -18,7 +18,7 @@ body {
 
 h1 {
     text-align: center;
-    color: #007BFF;
+    color: #28a745;
     font-size: 32px;
 }
 
@@ -44,7 +44,7 @@ input, select, textarea {
 
 button {
     padding: 12px;
-    background-color: #007BFF;
+    background-color: #28a745;
     color: white;
     border: none;
     border-radius: 5px;
@@ -53,7 +53,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #218838;
 }
 
 .review-summary {
@@ -64,27 +64,32 @@ button:hover {
     color: #333;
 }
 
-#reviewsList {
-    margin-top: 30px;
+#reviewsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.review {
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px;
+#reviewsTable th, #reviewsTable td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+#reviewsTable th {
+    background-color: #f2f2f2;
+    color: #28a745;
 }
 
 .good-review {
     background-color: #e0f7e0;
-    border-left: 5px solid green;
 }
 
 .average-review {
     background-color: #fff9c4;
-    border-left: 5px solid orange;
 }
 
 .bad-review {
     background-color: #ffebee;
-    border-left: 5px solid red;
 }
