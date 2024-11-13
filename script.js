@@ -18,6 +18,10 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const analytics = getAnalytics(app);
 
+let goodCount = 0;
+let averageCount = 0;
+let badCount = 0;
+
 document.getElementById('reviewForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -65,6 +69,11 @@ async function loadReviews() {
     } catch (error) {
         console.error("Error loading reviews:", error);
     }
+
+    // Update counts
+    document.getElementById('goodCount').textContent = goodCount;
+    document.getElementById('averageCount').textContent = averageCount;
+    document.getElementById('badCount').textContent = badCount;
 }
 
 function addReviewToSection(name, rating, review, goodSection, avgSection, badSection) {
@@ -72,13 +81,11 @@ function addReviewToSection(name, rating, review, goodSection, avgSection, badSe
     reviewItem.classList.add('review-item');
     reviewItem.innerHTML = `<h4>${name} - ${rating} Stars</h4><p>${review}</p>`;
 
-    if (rating >= 4) {
-        goodSection.appendChild(reviewItem);
-    } else if (rating === 3) {
-        avgSection.appendChild(reviewItem);
-    } else {
-        badSection.appendChild(reviewItem);
-    }
-}
+    // Define Keywords for classification
+    const goodKeywords = ["excellent", "great", "amazing", "fantastic", "awesome"];
+    const averageKeywords = ["good", "fine", "decent"];
+    const badKeywords = ["poor", "terrible", "bad", "awful", "disappointing"];
 
-window.onload = loadReviews;
+    // Classify review based on keywords
+    if (goodKeywords.some(keyword => review.toLowerCase().includes(keyword))) {
+        goodSection.appendChild(reviewItem
