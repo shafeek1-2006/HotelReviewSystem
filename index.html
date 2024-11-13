@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Review System</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.18.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.18.1/firebase-database.js"></script>
 </head>
 <body>
     <div class="container">
@@ -18,7 +20,9 @@
             <label for="rating">Rating:</label>
             <select id="rating" required>
                 <option value="5">5 Stars</option>
+                <option value="4">4 Stars</option>
                 <option value="3">3 Stars</option>
+                <option value="2">2 Stars</option>
                 <option value="1">1 Star</option>
             </select><br><br>
 
@@ -41,8 +45,8 @@
                 <tr>
                     <th>S.NO</th>
                     <th>Review</th>
-                    <th>Rating</th>
-                    <th>Points</th>
+                    <th>Type of Review</th>
+                    <th>Score</th>
                 </tr>
             </thead>
             <tbody>
