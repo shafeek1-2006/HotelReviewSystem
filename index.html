@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Review System</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Welcome to Our Hotel Review System</h1>
@@ -30,9 +32,11 @@
         </div>
 
         <!-- Review Counts -->
-        <div id="good-reviews-count">Good Reviews: 0</div>
-        <div id="average-reviews-count">Average Reviews: 0</div>
-        <div id="bad-reviews-count">Bad Reviews: 0</div>
+        <div class="review-counts">
+            <div id="good-reviews-count">Good Reviews: 0</div>
+            <div id="average-reviews-count">Average Reviews: 0</div>
+            <div id="bad-reviews-count">Bad Reviews: 0</div>
+        </div>
 
         <!-- Review Table -->
         <div class="review-table">
@@ -41,9 +45,10 @@
                 <thead>
                     <tr>
                         <th>S.NO</th>
-                        <th>Review</th>
+                        <th>Name</th>
+                        <th>Review Description</th>
                         <th>Rating</th>
-                        <th>Points</th>
+                        <th>Review Type</th>
                     </tr>
                 </thead>
                 <tbody id="reviews-table-body">
@@ -55,4 +60,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
