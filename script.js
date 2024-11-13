@@ -1,115 +1,84 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f5;
-    margin: 0;
-    padding: 0;
-    color: #333;
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-analytics.js";
+
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyASDqLWAJ6AEcpNUuwT2lSaPGGcHAkARSE",
+    authDomain: "hotel-review-system-15430.firebaseapp.com",
+    projectId: "hotel-review-system-15430",
+    storageBucket: "hotel-review-system-15430.appspot.com",
+    messagingSenderId: "31016766719",
+    appId: "1:31016766719:web:a1853a9e0a33e40113d0ca",
+    measurementId: "G-S4M0DB2MG9"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const analytics = getAnalytics(app);
+
+document.getElementById('reviewForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const rating = parseInt(document.getElementById('rating').value);
+    const review = document.getElementById('review').value;
+
+    if (name && review && rating) {
+        await saveReview(name, rating, review);
+    } else {
+        alert("Please fill all fields before submitting the review.");
+    }
+
+    document.getElementById('name').value = '';
+    document.getElementById('rating').value = '5';
+    document.getElementById('review').value = '';
+});
+
+async function saveReview(name, rating, review) {
+    try {
+        await addDoc(collection(db, "reviews"), { name, rating, review, timestamp: new Date() });
+        loadReviews();
+    } catch (error) {
+        console.error("Error adding review:", error);
+    }
 }
 
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+async function loadReviews() {
+    const goodReviews = document.getElementById('good-reviews').querySelector('.reviews-list');
+    const averageReviews = document.getElementById('average-reviews').querySelector('.reviews-list');
+    const badReviews = document.getElementById('bad-reviews').querySelector('.reviews-list');
+
+    goodReviews.innerHTML = '';
+    averageReviews.innerHTML = '';
+    badReviews.innerHTML = '';
+
+    const reviewsQuery = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
+
+    try {
+        const querySnapshot = await getDocs(reviewsQuery);
+        querySnapshot.forEach(doc => {
+            const { name, rating, review } = doc.data();
+            addReviewToSection(name, rating, review, goodReviews, averageReviews, badReviews);
+        });
+    } catch (error) {
+        console.error("Error loading reviews:", error);
+    }
 }
 
-.title {
-    text-align: center;
-    color: #4CAF50; /* Colorful title */
-    font-size: 2.5em;
-    margin-bottom: 10px;
+function addReviewToSection(name, rating, review, goodSection, avgSection, badSection) {
+    const reviewItem = document.createElement('div');
+    reviewItem.classList.add('review-item');
+    reviewItem.innerHTML = `<h4>${name} - ${rating} Stars</h4><p>${review}</p>`;
+
+    if (rating >= 4) {
+        goodSection.appendChild(reviewItem);
+    } else if (rating === 3) {
+        avgSection.appendChild(reviewItem);
+    } else {
+        badSection.appendChild(reviewItem);
+    }
 }
 
-.subtitle {
-    text-align: center;
-    color: #666;
-    margin-bottom: 20px;
-    font-style: italic;
-}
-
-.form label {
-    color: #4CAF50;
-    font-weight: bold;
-}
-
-.form input, .form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.submit-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.submit-button:hover {
-    background-color: #45a049;
-}
-
-.review-summary {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #e0f7fa;
-    border-radius: 5px;
-}
-
-.review-count {
-    font-size: 1.2em;
-    padding: 5px;
-}
-
-.good {
-    color: #388E3C;
-}
-
-.average {
-    color: #FBC02D;
-}
-
-.bad {
-    color: #D32F2F;
-}
-
-.review-table {
-    margin-top: 20px;
-}
-
-.table-title {
-    text-align: center;
-    font-size: 1.8em;
-    color: #009688;
-    margin-bottom: 15px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: center;
-}
-
-th {
-    background-color: #009688;
-    color: white;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
+window.onload = loadReviews;
