@@ -1,4 +1,3 @@
-// Firebase Configuration
 const firebaseConfig = {
     apiKey: "YOUR_FIREBASE_API_KEY",
     authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
@@ -49,7 +48,6 @@ document.getElementById("reviewForm").addEventListener("submit", function (event
         badReviewsCount++;
     }
 
-    // Save the review data to Firebase
     const reviewData = {
         name: name,
         rating: rating,
@@ -60,38 +58,44 @@ document.getElementById("reviewForm").addEventListener("submit", function (event
     const newReviewKey = firebase.database().ref().child('reviews').push().key;
     firebase.database().ref('reviews/' + newReviewKey).set(reviewData);
 
-    // Update review counts
     document.getElementById("goodReviewsCount").textContent = goodReviewsCount;
     document.getElementById("averageReviewsCount").textContent = averageReviewsCount;
     document.getElementById("badReviewsCount").textContent = badReviewsCount;
 
-    // Reset form after submission
     document.getElementById("reviewForm").reset();
 });
 
-// Function to load reviews from Firebase
 function loadReviews() {
     firebase.database().ref('reviews').on('value', function(snapshot) {
         const reviews = snapshot.val();
-        const reviewsTable = document.getElementById("reviewsTable").getElementsByTagName('tbody')[0];
-        reviewsTable.innerHTML = ''; // Clear the table
+        const reviewsContainer = document.getElementById("reviewsContainer");
+        reviewsContainer.innerHTML = ''; // Clear the container
 
         let index = 1;
         for (let key in reviews) {
             const reviewData = reviews[key];
-            const row = reviewsTable.insertRow();
+            const reviewElement = document.createElement("div");
+            let reviewClass = '';
 
-            let rowClass = '';
             if (reviewData.reviewType === "Good") {
-                rowClass = 'good-review';
+                reviewClass = 'good-review';
             } else if (reviewData.reviewType === "Average") {
-                rowClass = 'average-review';
+                reviewClass = 'average-review';
             } else if (reviewData.reviewType === "Bad") {
-                rowClass = 'bad-review';
+                reviewClass = 'bad-review';
             }
 
-            row.className = rowClass;
-            row.innerHTML = `
-                <td>${index++}</td>
-                <td><strong>${reviewData.name}</strong> - ${reviewData.rating} Stars<br>${reviewData.review}</td>
-                <td>${reviewData.review
+            reviewElement.className = 'review ' + reviewClass;
+            reviewElement.innerHTML = `
+                <h3>Review #${index++}</h3>
+                <p><strong>${reviewData.name}</strong> - ${reviewData.rating} Stars</p>
+                <p>${reviewData.review}</p>
+                <p>Type: ${reviewData.reviewType}</p>
+                <p>Score: ${reviewData.points}</p>
+            `;
+            reviewsContainer.appendChild(reviewElement);
+        }
+    });
+}
+
+loadReviews();
