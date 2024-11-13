@@ -1,107 +1,66 @@
-// Firebase Configuration
-const firebaseConfig = {
-    apiKey: "YOUR_FIREBASE_API_KEY",
-    authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
-    databaseURL: "YOUR_FIREBASE_DATABASE_URL",
-    projectId: "YOUR_FIREBASE_PROJECT_ID",
-    storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
-    appId: "YOUR_FIREBASE_APP_ID"
-};
+let reviewCount = 0;  // To keep track of S.NO
+let reviews = [];  // To store review data
 
-const app = firebase.initializeApp(firebaseConfig);
-const database = firebase.database(app);
+// Function to update the review count
+function updateReviewCounts() {
+    let goodReviews = reviews.filter(review => review.points === 1).length;
+    let averageReviews = reviews.filter(review => review.points === 0).length;
+    let badReviews = reviews.filter(review => review.points === -1).length;
 
-let goodReviewsCount = 0;
-let averageReviewsCount = 0;
-let badReviewsCount = 0;
-
-document.getElementById("reviewForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    let name = document.getElementById("name").value;
-    let rating = document.getElementById("rating").value;
-    let review = document.getElementById("review").value;
-
-    let points;
-    let reviewType;
-
-    if (rating == "5") {
-        points = 5;
-        reviewType = "Good";
-        goodReviewsCount++;
-    } else if (rating == "4") {
-        points = 4;
-        reviewType = "Good";
-        goodReviewsCount++;
-    } else if (rating == "3") {
-        points = 3;
-        reviewType = "Average";
-        averageReviewsCount++;
-    } else if (rating == "2") {
-        points = 2;
-        reviewType = "Bad";
-        badReviewsCount++;
-    } else if (rating == "1") {
-        points = 1;
-        reviewType = "Bad";
-        badReviewsCount++;
-    }
-
-    // Save the review data to Firebase
-    const reviewData = {
-        name: name,
-        rating: rating,
-        review: review,
-        points: points,
-        reviewType: reviewType
-    };
-    const newReviewKey = firebase.database().ref().child('reviews').push().key;
-    firebase.database().ref('reviews/' + newReviewKey).set(reviewData);
-
-    // Update review counts
-    document.getElementById("goodReviewsCount").textContent = goodReviewsCount;
-    document.getElementById("averageReviewsCount").textContent = averageReviewsCount;
-    document.getElementById("badReviewsCount").textContent = badReviewsCount;
-
-    // Reset form after submission
-    document.getElementById("reviewForm").reset();
-});
-
-// Function to load reviews from Firebase
-function loadReviews() {
-    firebase.database().ref('reviews').on('value', function(snapshot) {
-        const reviews = snapshot.val();
-        const reviewsTableBody = document.querySelector("#reviewsTable tbody");
-        reviewsTableBody.innerHTML = ''; // Clear the reviews table
-
-        for (let key in reviews) {
-            const reviewData = reviews[key];
-
-            // Create a table row for each review
-            const reviewRow = document.createElement("tr");
-
-            let reviewClass = '';
-            if (reviewData.reviewType === "Good") {
-                reviewClass = 'good-review';
-            } else if (reviewData.reviewType === "Average") {
-                reviewClass = 'average-review';
-            } else if (reviewData.reviewType === "Bad") {
-                reviewClass = 'bad-review';
-            }
-
-            reviewRow.className = reviewClass;
-            reviewRow.innerHTML = `
-                <td>${reviewData.name}</td>
-                <td>${reviewData.rating}</td>
-                <td>${reviewData.review}</td>
-                <td>${reviewData.reviewType}</td>
-            `;
-
-            reviewsTableBody.appendChild(reviewRow);
-        }
-    });
+    // Update the counts displayed in the HTML
+    document.getElementById('good-reviews-count').innerText = `Good Reviews: ${goodReviews}`;
+    document.getElementById('average-reviews-count').innerText = `Average Reviews: ${averageReviews}`;
+    document.getElementById('bad-reviews-count').innerText = `Bad Reviews: ${badReviews}`;
 }
 
-// Load reviews when the page loads
-loadReviews();
+// Function to submit the review
+function submitReview() {
+    let name = document.getElementById('name').value;
+    let rating = parseInt(document.querySelector('input[name="rating"]:checked')?.value);
+    let reviewText = document.getElementById('review').value;
+
+    if (!name || !rating || !reviewText) {
+        alert("Please fill all fields.");
+        return;
+    }
+
+    // Determine the points for the review
+    let points = 0;
+    if (rating >= 4) points = 1; // Good review
+    else if (rating === 3) points = 0; // Average review
+    else points = -1; // Bad review
+
+    // Add the new review to the reviews array
+    reviewCount++;
+    reviews.push({ sNo: reviewCount, name, reviewText, rating, points });
+
+    // Add the new review to the table
+    addReviewToTable({ sNo: reviewCount, name, reviewText, rating, points });
+
+    // Update the review counts
+    updateReviewCounts();
+
+    // Clear form after submission
+    document.getElementById('name').value = '';
+    document.querySelector('input[name="rating"]:checked').checked = false;
+    document.getElementById('review').value = '';
+}
+
+// Function to add review to the table
+function addReviewToTable(review) {
+    let tableBody = document.getElementById('reviews-table-body');
+    let row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${review.sNo}</td>
+        <td>${review.name} - ${review.reviewText}</td>
+        <td>${review.rating} Stars</td>
+        <td>${review.points}</td>
+    `;
+    tableBody.appendChild(row);
+}
+
+// Attach event listener to the submit button
+document.getElementById('submit-review').addEventListener('click', submitReview);
+
+// Initial count update on page load
+updateReviewCounts();
