@@ -4,53 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Review System</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Firebase SDK - Modular version -->
-    <script type="module" src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <h1>Welcome to Our Hotel Review System</h1>
-        <p class="welcome-message">We value your feedback! Please share your honest review to help us improve our service.</p>
+        <p>We value your feedback! Please share your honest review to help us improve our service.</p>
 
-        <!-- Review Submission Form -->
-        <form id="reviewForm">
+        <!-- Review Form -->
+        <div class="form">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required aria-label="Your Name">
+            <input type="text" id="name" required><br><br>
 
-            <label for="rating">Rating:</label>
-            <select id="rating" name="rating" required aria-label="Rate the hotel">
-                <option value="5">5 Stars</option>
-                <option value="4">4 Stars</option>
-                <option value="3">3 Stars</option>
-                <option value="2">2 Stars</option>
-                <option value="1">1 Star</option>
-            </select>
+            <label>Rating:</label>
+            <label><input type="radio" name="rating" value="5"> 5 Stars</label>
+            <label><input type="radio" name="rating" value="4"> 4 Stars</label>
+            <label><input type="radio" name="rating" value="3"> 3 Stars</label>
+            <label><input type="radio" name="rating" value="2"> 2 Stars</label>
+            <label><input type="radio" name="rating" value="1"> 1 Star</label><br><br>
 
             <label for="review">Review:</label>
-            <textarea id="review" name="review" rows="4" required aria-label="Your Review"></textarea>
+            <textarea id="review" required></textarea><br><br>
 
-            <button type="submit">Submit Review</button>
-        </form>
+            <button id="submit-review">Submit Review</button>
+        </div>
 
-        <h2>Customer Reviews</h2>
-        <div id="reviews">
-            <div id="good-reviews" class="review-section">
-                <h3>Good Reviews</h3>
-                <p id="good-reviews-count">Good Reviews: 0</p>
-                <div class="reviews-list"></div>
-            </div>
-            <div id="average-reviews" class="review-section">
-                <h3>Average Reviews</h3>
-                <p id="average-reviews-count">Average Reviews: 0</p>
-                <div class="reviews-list"></div>
-            </div>
-            <div id="bad-reviews" class="review-section">
-                <h3>Bad Reviews</h3>
-                <p id="bad-reviews-count">Bad Reviews: 0</p>
-                <div class="reviews-list"></div>
-            </div>
+        <!-- Review Counts -->
+        <div id="good-reviews-count">Good Reviews: 0</div>
+        <div id="average-reviews-count">Average Reviews: 0</div>
+        <div id="bad-reviews-count">Bad Reviews: 0</div>
+
+        <!-- Review Sections -->
+        <div id="good-reviews" class="review-section">
+            <h3>Good Reviews</h3>
+        </div>
+        <div id="average-reviews" class="review-section">
+            <h3>Average Reviews</h3>
+        </div>
+        <div id="bad-reviews" class="review-section">
+            <h3>Bad Reviews</h3>
         </div>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
