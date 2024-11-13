@@ -1,66 +1,89 @@
-let reviewCount = 0;  // To keep track of S.NO
-let reviews = [];  // To store review data
-
-// Function to update the review count
-function updateReviewCounts() {
-    let goodReviews = reviews.filter(review => review.points === 1).length;
-    let averageReviews = reviews.filter(review => review.points === 0).length;
-    let badReviews = reviews.filter(review => review.points === -1).length;
-
-    // Update the counts displayed in the HTML
-    document.getElementById('good-reviews-count').innerText = `Good Reviews: ${goodReviews}`;
-    document.getElementById('average-reviews-count').innerText = `Average Reviews: ${averageReviews}`;
-    document.getElementById('bad-reviews-count').innerText = `Bad Reviews: ${badReviews}`;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-// Function to submit the review
-function submitReview() {
-    let name = document.getElementById('name').value;
-    let rating = parseInt(document.querySelector('input[name="rating"]:checked')?.value);
-    let reviewText = document.getElementById('review').value;
-
-    if (!name || !rating || !reviewText) {
-        alert("Please fill all fields.");
-        return;
-    }
-
-    // Determine the points for the review
-    let points = 0;
-    if (rating >= 4) points = 1; // Good review
-    else if (rating === 3) points = 0; // Average review
-    else points = -1; // Bad review
-
-    // Add the new review to the reviews array
-    reviewCount++;
-    reviews.push({ sNo: reviewCount, name, reviewText, rating, points });
-
-    // Add the new review to the table
-    addReviewToTable({ sNo: reviewCount, name, reviewText, rating, points });
-
-    // Update the review counts
-    updateReviewCounts();
-
-    // Clear form after submission
-    document.getElementById('name').value = '';
-    document.querySelector('input[name="rating"]:checked').checked = false;
-    document.getElementById('review').value = '';
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
 }
 
-// Function to add review to the table
-function addReviewToTable(review) {
-    let tableBody = document.getElementById('reviews-table-body');
-    let row = document.createElement('tr');
-    row.innerHTML = `
-        <td>${review.sNo}</td>
-        <td>${review.name} - ${review.reviewText}</td>
-        <td>${review.rating} Stars</td>
-        <td>${review.points}</td>
-    `;
-    tableBody.appendChild(row);
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    border-radius: 8px;
 }
 
-// Attach event listener to the submit button
-document.getElementById('submit-review').addEventListener('click', submitReview);
+h1 {
+    text-align: center;
+    color: #333;
+}
 
-// Initial count update on page load
-updateReviewCounts();
+form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+label {
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #333;
+}
+
+input, select, textarea {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 12px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.review-summary {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+table td {
+    font-size: 14px;
+}
