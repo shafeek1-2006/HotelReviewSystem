@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Review System</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Firebase Integration -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 </head>
-
 <body>
     <div class="container">
-        <h1>Welcome to Our Hotel Review System</h1>
-        <p>We value your feedback! Please share your honest review to help us improve our service.</p>
+        <h1 class="title">Welcome to Our Hotel Review System</h1>
+        <p class="subtitle">We value your feedback! Please share your honest review to help us improve our service.</p>
 
         <!-- Review Form -->
         <div class="form">
@@ -28,19 +29,19 @@
             <label for="review">Review:</label>
             <textarea id="review" required></textarea><br><br>
 
-            <button id="submit-review">Submit Review</button>
+            <button id="submit-review" class="submit-button">Submit Review</button>
         </div>
 
         <!-- Review Counts -->
-        <div class="review-counts">
-            <div id="good-reviews-count">Good Reviews: 0</div>
-            <div id="average-reviews-count">Average Reviews: 0</div>
-            <div id="bad-reviews-count">Bad Reviews: 0</div>
+        <div class="review-summary">
+            <div id="good-reviews-count" class="review-count good">Good Reviews: 0</div>
+            <div id="average-reviews-count" class="review-count average">Average Reviews: 0</div>
+            <div id="bad-reviews-count" class="review-count bad">Bad Reviews: 0</div>
         </div>
 
         <!-- Review Table -->
         <div class="review-table">
-            <h3>Customer Reviews</h3>
+            <h3 class="table-title">Customer Reviews</h3>
             <table>
                 <thead>
                     <tr>
@@ -60,5 +61,4 @@
 
     <script src="script.js"></script>
 </body>
-
 </html>
