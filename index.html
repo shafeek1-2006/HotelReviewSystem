@@ -4,61 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Review System</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Firebase Integration -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Firebase SDK - Modular version -->
+    <script type="module" src="script.js"></script>
 </head>
 <body>
     <div class="container">
         <h1 class="title">Welcome to Our Hotel Review System</h1>
-        <p class="subtitle">We value your feedback! Please share your honest review to help us improve our service.</p>
+        <p class="welcome-message">We value your feedback! Please share your honest review to help us improve our service.</p>
 
-        <!-- Review Form -->
-        <div class="form">
+        <!-- Review Submission Form -->
+        <form id="reviewForm">
             <label for="name">Name:</label>
-            <input type="text" id="name" required><br><br>
+            <input type="text" id="name" name="name" required aria-label="Your Name">
 
-            <label>Rating:</label>
-            <label><input type="radio" name="rating" value="5"> 5 Stars</label>
-            <label><input type="radio" name="rating" value="4"> 4 Stars</label>
-            <label><input type="radio" name="rating" value="3"> 3 Stars</label>
-            <label><input type="radio" name="rating" value="2"> 2 Stars</label>
-            <label><input type="radio" name="rating" value="1"> 1 Star</label><br><br>
+            <label for="rating">Rating:</label>
+            <select id="rating" name="rating" required aria-label="Rate the hotel">
+                <option value="5">5 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="2">2 Stars</option>
+                <option value="1">1 Star</option>
+            </select>
 
             <label for="review">Review:</label>
-            <textarea id="review" required></textarea><br><br>
+            <textarea id="review" name="review" rows="4" required aria-label="Your Review"></textarea>
 
-            <button id="submit-review" class="submit-button">Submit Review</button>
-        </div>
+            <button type="submit">Submit Review</button>
+        </form>
 
-        <!-- Review Counts -->
-        <div class="review-summary">
-            <div id="good-reviews-count" class="review-count good">Good Reviews: 0</div>
-            <div id="average-reviews-count" class="review-count average">Average Reviews: 0</div>
-            <div id="bad-reviews-count" class="review-count bad">Bad Reviews: 0</div>
-        </div>
-
-        <!-- Review Table -->
-        <div class="review-table">
-            <h3 class="table-title">Customer Reviews</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>S.NO</th>
-                        <th>Name</th>
-                        <th>Review Description</th>
-                        <th>Rating</th>
-                        <th>Review Type</th>
-                    </tr>
-                </thead>
-                <tbody id="reviews-table-body">
-                    <!-- Reviews will be dynamically added here -->
-                </tbody>
-            </table>
+        <h2>Customer Reviews</h2>
+        <div id="reviews">
+            <div id="good-reviews" class="review-section">
+                <h3>Good Reviews</h3>
+                <div class="reviews-list"></div>
+            </div>
+            <div id="average-reviews" class="review-section">
+                <h3>Average Reviews</h3>
+                <div class="reviews-list"></div>
+            </div>
+            <div id="bad-reviews" class="review-section">
+                <h3>Bad Reviews</h3>
+                <div class="reviews-list"></div>
+            </div>
         </div>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
