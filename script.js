@@ -1,103 +1,51 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-analytics.js";
+// Function to update the review count
+function updateReviewCounts() {
+    let goodReviews = document.querySelectorAll('#good-reviews .review-item').length;
+    let averageReviews = document.querySelectorAll('#average-reviews .review-item').length;
+    let badReviews = document.querySelectorAll('#bad-reviews .review-item').length;
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyASDqLWAJ6AEcpNUuwT2lSaPGGcHAkARSE",
-  authDomain: "hotel-review-system-15430.firebaseapp.com",
-  projectId: "hotel-review-system-15430",
-  storageBucket: "hotel-review-system-15430.appspot.com",
-  messagingSenderId: "31016766719",
-  appId: "1:31016766719:web:a1853a9e0a33e40113d0ca",
-  measurementId: "G-S4M0DB2MG9"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const analytics = getAnalytics(app);
-
-document.getElementById('reviewForm').addEventListener('submit', async function(event) {
-    event.preventDefault();
-
-    const name = document.getElementById('name').value;
-    const rating = parseInt(document.getElementById('rating').value);
-    const review = document.getElementById('review').value;
-
-    if (name && review && rating) {
-        await saveReview(name, rating, review);
-    } else {
-        alert("Please fill all fields before submitting the review.");
-    }
-
-    document.getElementById('name').value = '';
-    document.getElementById('rating').value = '5';
-    document.getElementById('review').value = '';
-});
-
-async function saveReview(name, rating, review) {
-    try {
-        await addDoc(collection(db, "reviews"), { name, rating, review, timestamp: new Date() });
-        loadReviews();
-    } catch (error) {
-        console.error("Error adding review:", error);
-    }
+    // Update the counts displayed in the HTML
+    document.getElementById('good-reviews-count').innerText = `Good Reviews: ${goodReviews}`;
+    document.getElementById('average-reviews-count').innerText = `Average Reviews: ${averageReviews}`;
+    document.getElementById('bad-reviews-count').innerText = `Bad Reviews: ${badReviews}`;
 }
 
-async function loadReviews() {
-    const goodReviews = document.getElementById('good-reviews').querySelector('.reviews-list');
-    const averageReviews = document.getElementById('average-reviews').querySelector('.reviews-list');
-    const badReviews = document.getElementById('bad-reviews').querySelector('.reviews-list');
-    const goodCount = document.getElementById('good-reviews-count');
-    const averageCount = document.getElementById('average-reviews-count');
-    const badCount = document.getElementById('bad-reviews-count');
+// Function to submit the review
+function submitReview() {
+    let name = document.getElementById('name').value;
+    let rating = parseInt(document.querySelector('input[name="rating"]:checked')?.value);
+    let reviewText = document.getElementById('review').value;
 
-    goodReviews.innerHTML = '';
-    averageReviews.innerHTML = '';
-    badReviews.innerHTML = '';
-
-    let goodCountValue = 0;
-    let averageCountValue = 0;
-    let badCountValue = 0;
-
-    const reviewsQuery = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
-
-    try {
-        const querySnapshot = await getDocs(reviewsQuery);
-        querySnapshot.forEach(doc => {
-            const { name, rating, review } = doc.data();
-            addReviewToSection(name, rating, review, goodReviews, averageReviews, badReviews);
-            if (rating >= 4) {
-                goodCountValue++;
-            } else if (rating === 3) {
-                averageCountValue++;
-            } else {
-                badCountValue++;
-            }
-        });
-
-        goodCount.textContent = `Good Reviews: ${goodCountValue}`;
-        averageCount.textContent = `Average Reviews: ${averageCountValue}`;
-        badCount.textContent = `Bad Reviews: ${badCountValue}`;
-
-    } catch (error) {
-        console.error("Error loading reviews:", error);
+    if (!name || !rating || !reviewText) {
+        alert("Please fill all fields.");
+        return;
     }
-}
 
-function addReviewToSection(name, rating, review, goodSection, avgSection, badSection) {
-    const reviewItem = document.createElement('div');
-    reviewItem.classList.add('review-item');
-    reviewItem.innerHTML = `<h4>${name} - ${rating} Stars</h4><p>${review}</p>`;
+    // Create a new review element
+    let newReview = document.createElement('div');
+    newReview.classList.add('review-item');
+    newReview.innerHTML = `<h4>${name} - ${rating} Stars</h4><p>${reviewText}</p>`;
 
+    // Categorize the review based on rating
     if (rating >= 4) {
-        goodSection.appendChild(reviewItem);
+        document.getElementById('good-reviews').appendChild(newReview);
     } else if (rating === 3) {
-        avgSection.appendChild(reviewItem);
+        document.getElementById('average-reviews').appendChild(newReview);
     } else {
-        badSection.appendChild(reviewItem);
+        document.getElementById('bad-reviews').appendChild(newReview);
     }
+
+    // Update the review counts
+    updateReviewCounts();
+
+    // Clear form after submission
+    document.getElementById('name').value = '';
+    document.querySelector('input[name="rating"]:checked').checked = false;
+    document.getElementById('review').value = '';
 }
 
-window.onload = loadReviews;
+// Attach event listener to the submit button
+document.getElementById('submit-review').addEventListener('click', submitReview);
+
+// Initial count update on page load
+updateReviewCounts();
