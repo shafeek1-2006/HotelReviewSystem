@@ -18,10 +18,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const analytics = getAnalytics(app);
 
-let goodCount = 0;
-let averageCount = 0;
-let badCount = 0;
-
 document.getElementById('reviewForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -53,10 +49,17 @@ async function loadReviews() {
     const goodReviews = document.getElementById('good-reviews').querySelector('.reviews-list');
     const averageReviews = document.getElementById('average-reviews').querySelector('.reviews-list');
     const badReviews = document.getElementById('bad-reviews').querySelector('.reviews-list');
+    const goodCount = document.getElementById('good-reviews-count');
+    const averageCount = document.getElementById('average-reviews-count');
+    const badCount = document.getElementById('bad-reviews-count');
 
     goodReviews.innerHTML = '';
     averageReviews.innerHTML = '';
     badReviews.innerHTML = '';
+
+    let goodCountValue = 0;
+    let averageCountValue = 0;
+    let badCountValue = 0;
 
     const reviewsQuery = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
 
@@ -65,15 +68,22 @@ async function loadReviews() {
         querySnapshot.forEach(doc => {
             const { name, rating, review } = doc.data();
             addReviewToSection(name, rating, review, goodReviews, averageReviews, badReviews);
+            if (rating >= 4) {
+                goodCountValue++;
+            } else if (rating === 3) {
+                averageCountValue++;
+            } else {
+                badCountValue++;
+            }
         });
+
+        goodCount.textContent = `Good Reviews: ${goodCountValue}`;
+        averageCount.textContent = `Average Reviews: ${averageCountValue}`;
+        badCount.textContent = `Bad Reviews: ${badCountValue}`;
+
     } catch (error) {
         console.error("Error loading reviews:", error);
     }
-
-    // Update counts
-    document.getElementById('goodCount').textContent = goodCount;
-    document.getElementById('averageCount').textContent = averageCount;
-    document.getElementById('badCount').textContent = badCount;
 }
 
 function addReviewToSection(name, rating, review, goodSection, avgSection, badSection) {
@@ -81,11 +91,13 @@ function addReviewToSection(name, rating, review, goodSection, avgSection, badSe
     reviewItem.classList.add('review-item');
     reviewItem.innerHTML = `<h4>${name} - ${rating} Stars</h4><p>${review}</p>`;
 
-    // Define Keywords for classification
-    const goodKeywords = ["excellent", "great", "amazing", "fantastic", "awesome"];
-    const averageKeywords = ["good", "fine", "decent"];
-    const badKeywords = ["poor", "terrible", "bad", "awful", "disappointing"];
+    if (rating >= 4) {
+        goodSection.appendChild(reviewItem);
+    } else if (rating === 3) {
+        avgSection.appendChild(reviewItem);
+    } else {
+        badSection.appendChild(reviewItem);
+    }
+}
 
-    // Classify review based on keywords
-    if (goodKeywords.some(keyword => review.toLowerCase().includes(keyword))) {
-        goodSection.appendChild(reviewItem
+window.onload = loadReviews;
