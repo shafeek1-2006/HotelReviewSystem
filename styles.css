@@ -1,115 +1,89 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f5;
-    margin: 0;
-    padding: 0;
+    background-color: #f9f9f9;
     color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
 }
 
 .container {
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #fff;
+    width: 100%;
+    max-width: 600px;
     padding: 20px;
+    background: #fff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-.title {
+h1.title {
+    color: #FF5733; /* Colorful title */
     text-align: center;
-    color: #4CAF50; /* Colorful title */
-    font-size: 2.5em;
-    margin-bottom: 10px;
+    font-size: 2em;
+    text-decoration: underline;
+    text-decoration-color: #4CAF50; /* Underline color */
+    text-underline-offset: 8px;
 }
 
-.subtitle {
-    text-align: center;
-    color: #666;
-    margin-bottom: 20px;
-    font-style: italic;
+.welcome-message {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: #555;
 }
 
-.form label {
-    color: #4CAF50;
+form label {
+    display: block;
+    margin: 10px 0 5px;
     font-weight: bold;
 }
 
-.form input, .form textarea {
+input[type="text"], select, textarea {
     width: 100%;
-    padding: 10px;
-    margin-top: 5px;
+    padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 4px;
 }
 
-.submit-button {
+button {
     background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    padding: 10px;
     cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
     transition: background-color 0.3s;
 }
 
-.submit-button:hover {
+button:hover {
     background-color: #45a049;
 }
 
-.review-summary {
-    display: flex;
-    justify-content: space-around;
+.review-section {
     margin-top: 20px;
     padding: 10px;
-    background-color: #e0f7fa;
+    border-top: 1px solid #ddd;
+}
+
+h3 {
+    color: #4CAF50;
+    margin-top: 0;
+    text-decoration: underline;
+    text-decoration-color: #FF5733;
+    text-underline-offset: 4px;
+}
+
+.reviews-list {
+    margin-top: 10px;
+}
+
+.review-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    background-color: #f1f1f1;
     border-radius: 5px;
-}
-
-.review-count {
-    font-size: 1.2em;
-    padding: 5px;
-}
-
-.good {
-    color: #388E3C;
-}
-
-.average {
-    color: #FBC02D;
-}
-
-.bad {
-    color: #D32F2F;
-}
-
-.review-table {
-    margin-top: 20px;
-}
-
-.table-title {
-    text-align: center;
-    font-size: 1.8em;
-    color: #009688;
-    margin-bottom: 15px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: center;
-}
-
-th {
-    background-color: #009688;
-    color: white;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+    margin: 5px 0;
 }
