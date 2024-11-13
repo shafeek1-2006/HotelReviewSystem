@@ -1,160 +1,115 @@
-/* General reset and layout styles */
-* {
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f5;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
     color: #333;
-    line-height: 1.6;
-    padding: 20px;
 }
 
 .container {
-    width: 80%;
-    max-width: 1000px;
-    margin: 0 auto;
+    max-width: 800px;
+    margin: 20px auto;
     background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Header Styles */
-h1 {
-    text-align: center;
-    color: #28a745;
-    font-size: 36px;
-    margin-bottom: 20px;
-}
-
-p {
-    text-align: center;
-    font-size: 18px;
-    color: #555;
-    margin-bottom: 40px;
-}
-
-/* Form Styles */
-.form {
-    margin-bottom: 30px;
     padding: 20px;
-    background-color: #f1f1f1;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-label {
-    font-size: 18px;
-    margin-bottom: 8px;
-    display: block;
-    color: #333;
-}
-
-input[type="text"],
-textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px;
-    color: #555;
-}
-
-input[type="radio"] {
-    margin-right: 8px;
-}
-
-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-/* Review Counts Section */
-.review-counts {
+.title {
     text-align: center;
-    margin-bottom: 40px;
-}
-
-.review-counts div {
-    font-size: 18px;
+    color: #4CAF50; /* Colorful title */
+    font-size: 2.5em;
     margin-bottom: 10px;
-    color: #333;
 }
 
-#good-reviews-count {
-    color: #28a745;
-}
-
-#average-reviews-count {
-    color: #ffc107;
-}
-
-#bad-reviews-count {
-    color: #dc3545;
-}
-
-/* Review Table Section */
-.review-table {
-    margin-top: 40px;
-}
-
-h3 {
+.subtitle {
     text-align: center;
-    font-size: 24px;
+    color: #666;
     margin-bottom: 20px;
-    color: #333;
+    font-style: italic;
+}
+
+.form label {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.form input, .form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+
+.review-summary {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #e0f7fa;
+    border-radius: 5px;
+}
+
+.review-count {
+    font-size: 1.2em;
+    padding: 5px;
+}
+
+.good {
+    color: #388E3C;
+}
+
+.average {
+    color: #FBC02D;
+}
+
+.bad {
+    color: #D32F2F;
+}
+
+.review-table {
+    margin-top: 20px;
+}
+
+.table-title {
+    text-align: center;
+    font-size: 1.8em;
+    color: #009688;
+    margin-bottom: 15px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
 }
 
-th,
-td {
+th, td {
+    border: 1px solid #ddd;
     padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    font-size: 16px;
+    text-align: center;
 }
 
 th {
-    background-color: #f2f2f2;
-    color: #333;
+    background-color: #009688;
+    color: white;
 }
 
-tr:nth-child(even) {
+tbody tr:nth-child(even) {
     background-color: #f9f9f9;
-}
-
-tr:hover {
-    background-color: #f1f1f1;
-}
-
-table th, table td {
-    border-left: 1px solid #ddd;
-}
-
-table td:first-child {
-    border-left: none;
-}
-
-table td:last-child {
-    border-right: none;
 }
