@@ -1,9 +1,21 @@
+// Firebase Configuration
+const firebaseConfig = {
+    apiKey: "YOUR_FIREBASE_API_KEY",
+    authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+    databaseURL: "YOUR_FIREBASE_DATABASE_URL",
+    projectId: "YOUR_FIREBASE_PROJECT_ID",
+    storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
+    appId: "YOUR_FIREBASE_APP_ID"
+};
+
+const app = firebase.initializeApp(firebaseConfig);
+const database = firebase.database(app);
+
 let goodReviewsCount = 0;
 let averageReviewsCount = 0;
 let badReviewsCount = 0;
 let reviewCounter = 1;
-
-let reviews = []; // This will store the reviews
 
 document.getElementById("reviewForm").addEventListener("submit", function (event) {
     event.preventDefault();
@@ -16,58 +28,70 @@ document.getElementById("reviewForm").addEventListener("submit", function (event
     let reviewType;
 
     if (rating == "5") {
-        points = 1;
-        reviewType = "Good Reviews";
+        points = 5;
+        reviewType = "Good";
+        goodReviewsCount++;
+    } else if (rating == "4") {
+        points = 4;
+        reviewType = "Good";
         goodReviewsCount++;
     } else if (rating == "3") {
-        points = 0;
-        reviewType = "Average Reviews";
+        points = 3;
+        reviewType = "Average";
         averageReviewsCount++;
+    } else if (rating == "2") {
+        points = 2;
+        reviewType = "Bad";
+        badReviewsCount++;
     } else if (rating == "1") {
-        points = -1;
-        reviewType = "Bad Reviews";
+        points = 1;
+        reviewType = "Bad";
         badReviewsCount++;
     }
 
-    // Save review data in the array
-    reviews.push({ name, rating, review, points });
+    // Save the review data to Firebase
+    const reviewData = {
+        name: name,
+        rating: rating,
+        review: review,
+        points: points,
+        reviewType: reviewType
+    };
+    const newReviewKey = firebase.database().ref().child('reviews').push().key;
+    firebase.database().ref('reviews/' + newReviewKey).set(reviewData);
 
-    // Update the review count summary
+    // Update review counts
     document.getElementById("goodReviewsCount").textContent = goodReviewsCount;
     document.getElementById("averageReviewsCount").textContent = averageReviewsCount;
     document.getElementById("badReviewsCount").textContent = badReviewsCount;
 
-    // Update the reviews table
-    updateReviewsTable();
-
-    // Reset the form
+    // Reset form after submission
     document.getElementById("reviewForm").reset();
 });
 
-// Function to update the reviews table with the latest reviews
-function updateReviewsTable() {
-    let table = document.getElementById("reviewsTable").getElementsByTagName('tbody')[0];
-    table.innerHTML = ''; // Clear existing table rows
+// Function to load reviews from Firebase
+function loadReviews() {
+    firebase.database().ref('reviews').on('value', function(snapshot) {
+        const reviews = snapshot.val();
+        const reviewsTable = document.getElementById("reviewsTable").getElementsByTagName('tbody')[0];
+        reviewsTable.innerHTML = ''; // Clear the table
 
-    reviews.forEach((reviewData, index) => {
-        let newRow = table.insertRow();
-        let rowClass = '';
+        let index = 1;
+        for (let key in reviews) {
+            const reviewData = reviews[key];
+            const row = reviewsTable.insertRow();
 
-        if (reviewData.rating == "5") {
-            rowClass = 'good-review';
-        } else if (reviewData.rating == "3") {
-            rowClass = 'average-review';
-        } else if (reviewData.rating == "1") {
-            rowClass = 'bad-review';
-        }
+            let rowClass = '';
+            if (reviewData.reviewType === "Good") {
+                rowClass = 'good-review';
+            } else if (reviewData.reviewType === "Average") {
+                rowClass = 'average-review';
+            } else if (reviewData.reviewType === "Bad") {
+                rowClass = 'bad-review';
+            }
 
-        newRow.className = rowClass;
-
-        newRow.innerHTML = `
-            <td>${index + 1}</td>
-            <td><strong>${reviewData.name}</strong> - ${reviewData.rating} Stars<br>${reviewData.review}</td>
-            <td>${reviewData.rating} Stars</td>
-            <td>${reviewData.points}</td>
-        `;
-    });
-}
+            row.className = rowClass;
+            row.innerHTML = `
+                <td>${index++}</td>
+                <td><strong>${reviewData.name}</strong> - ${reviewData.rating} Stars<br>${reviewData.review}</td>
+                <td>${reviewData.review
