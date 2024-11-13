@@ -5,53 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Review System</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/9.18.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.18.1/firebase-database.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Welcome to Our Hotel Review System</h1>
         <p>We value your feedback! Please share your honest review to help us improve our service.</p>
-        
-        <form id="reviewForm">
+
+        <!-- Review Form -->
+        <div class="form">
             <label for="name">Name:</label>
             <input type="text" id="name" required><br><br>
-            
-            <label for="rating">Rating:</label>
-            <select id="rating" required>
-                <option value="5">5 Stars</option>
-                <option value="4">4 Stars</option>
-                <option value="3">3 Stars</option>
-                <option value="2">2 Stars</option>
-                <option value="1">1 Star</option>
-            </select><br><br>
+
+            <label>Rating:</label>
+            <label><input type="radio" name="rating" value="5"> 5 Stars</label>
+            <label><input type="radio" name="rating" value="4"> 4 Stars</label>
+            <label><input type="radio" name="rating" value="3"> 3 Stars</label>
+            <label><input type="radio" name="rating" value="2"> 2 Stars</label>
+            <label><input type="radio" name="rating" value="1"> 1 Star</label><br><br>
 
             <label for="review">Review:</label>
             <textarea id="review" required></textarea><br><br>
 
-            <button type="submit">Submit Review</button>
-        </form>
+            <button id="submit-review">Submit Review</button>
+        </div>
 
-        <h2>Customer Reviews</h2>
-        
-        <table id="reviewsTable">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Rating</th>
-                    <th>Review</th>
-                    <th>Review Type</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Reviews will be dynamically added here -->
-            </tbody>
-        </table>
+        <!-- Review Counts -->
+        <div id="good-reviews-count">Good Reviews: 0</div>
+        <div id="average-reviews-count">Average Reviews: 0</div>
+        <div id="bad-reviews-count">Bad Reviews: 0</div>
 
-        <div class="review-summary">
-            <p>Good Reviews: <span id="goodReviewsCount">0</span></p>
-            <p>Average Reviews: <span id="averageReviewsCount">0</span></p>
-            <p>Bad Reviews: <span id="badReviewsCount">0</span></p>
+        <!-- Review Table -->
+        <div class="review-table">
+            <h3>Customer Reviews</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>S.NO</th>
+                        <th>Review</th>
+                        <th>Rating</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody id="reviews-table-body">
+                    <!-- Reviews will be dynamically added here -->
+                </tbody>
+            </table>
         </div>
     </div>
 
