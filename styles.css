@@ -1,12 +1,7 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* General styles */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f0f4f8;
+    background-color: #f7f7f7;
     color: #333;
     margin: 0;
     padding: 0;
@@ -69,40 +64,27 @@ button:hover {
     color: #333;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+#reviewsList {
+    margin-top: 30px;
 }
 
-table th, table td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
-
-table th {
-    background-color: #007BFF;
-    color: white;
-    text-align: center;
-}
-
-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-table td {
-    font-size: 16px;
+.review {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
 }
 
 .good-review {
     background-color: #e0f7e0;
+    border-left: 5px solid green;
 }
 
 .average-review {
     background-color: #fff9c4;
+    border-left: 5px solid orange;
 }
 
 .bad-review {
     background-color: #ffebee;
+    border-left: 5px solid red;
 }
