@@ -1,89 +1,73 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+let goodReviewsCount = 0;
+let averageReviewsCount = 0;
+let badReviewsCount = 0;
+let reviewCounter = 1;
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-}
+let reviews = []; // This will store the reviews
 
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-    border-radius: 8px;
-}
+document.getElementById("reviewForm").addEventListener("submit", function (event) {
+    event.preventDefault();
 
-h1 {
-    text-align: center;
-    color: #333;
-}
+    let name = document.getElementById("name").value;
+    let rating = document.getElementById("rating").value;
+    let review = document.getElementById("review").value;
 
-form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-}
+    let points;
+    let reviewType;
 
-label {
-    margin-bottom: 8px;
-    font-size: 16px;
-    color: #333;
-}
+    if (rating == "5") {
+        points = 1;
+        reviewType = "Good Reviews";
+        goodReviewsCount++;
+    } else if (rating == "3") {
+        points = 0;
+        reviewType = "Average Reviews";
+        averageReviewsCount++;
+    } else if (rating == "1") {
+        points = -1;
+        reviewType = "Bad Reviews";
+        badReviewsCount++;
+    }
 
-input, select, textarea {
-    padding: 10px;
-    font-size: 16px;
-    margin-bottom: 12px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
+    // Save review data in the array
+    reviews.push({ name, rating, review, points });
 
-button {
-    padding: 12px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    // Update the review count summary
+    document.getElementById("goodReviewsCount").textContent = goodReviewsCount;
+    document.getElementById("averageReviewsCount").textContent = averageReviewsCount;
+    document.getElementById("badReviewsCount").textContent = badReviewsCount;
 
-button:hover {
-    background-color: #45a049;
-}
+    // Update the reviews table
+    updateReviewsTable();
 
-.review-summary {
-    margin-bottom: 20px;
-    font-size: 16px;
-}
+    // Reset the form
+    document.getElementById("reviewForm").reset();
+});
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
+// Function to update the reviews table with the latest reviews
+function updateReviewsTable() {
+    let table = document.getElementById("reviewsTable").getElementsByTagName('tbody')[0];
+    table.innerHTML = ''; // Clear existing table rows
 
-table th, table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
+    reviews.forEach((reviewData, index) => {
+        let newRow = table.insertRow();
+        let rowClass = '';
 
-table th {
-    background-color: #f2f2f2;
-}
+        if (reviewData.rating == "5") {
+            rowClass = 'good-review';
+        } else if (reviewData.rating == "3") {
+            rowClass = 'average-review';
+        } else if (reviewData.rating == "1") {
+            rowClass = 'bad-review';
+        }
 
-table tr:hover {
-    background-color: #f1f1f1;
-}
+        newRow.className = rowClass;
 
-table td {
-    font-size: 14px;
+        newRow.innerHTML = `
+            <td>${index + 1}</td>
+            <td><strong>${reviewData.name}</strong> - ${reviewData.rating} Stars<br>${reviewData.review}</td>
+            <td>${reviewData.rating} Stars</td>
+            <td>${reviewData.points}</td>
+        `;
+    });
 }
