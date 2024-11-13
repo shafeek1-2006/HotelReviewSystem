@@ -15,7 +15,6 @@ const database = firebase.database(app);
 let goodReviewsCount = 0;
 let averageReviewsCount = 0;
 let badReviewsCount = 0;
-let reviewCounter = 1;
 
 document.getElementById("reviewForm").addEventListener("submit", function (event) {
     event.preventDefault();
@@ -73,16 +72,14 @@ document.getElementById("reviewForm").addEventListener("submit", function (event
 function loadReviews() {
     firebase.database().ref('reviews').on('value', function(snapshot) {
         const reviews = snapshot.val();
-        const reviewsList = document.getElementById("reviewsList");
-        reviewsList.innerHTML = ''; // Clear the reviews list
+        const reviewsTableBody = document.querySelector("#reviewsTable tbody");
+        reviewsTableBody.innerHTML = ''; // Clear the reviews table
 
-        let index = 1;
         for (let key in reviews) {
             const reviewData = reviews[key];
 
-            // Create review display
-            const reviewElement = document.createElement("div");
-            reviewElement.classList.add("review");
+            // Create a table row for each review
+            const reviewRow = document.createElement("tr");
 
             let reviewClass = '';
             if (reviewData.reviewType === "Good") {
@@ -93,15 +90,15 @@ function loadReviews() {
                 reviewClass = 'bad-review';
             }
 
-            reviewElement.className = reviewClass;
-            reviewElement.innerHTML = `
-                <h3>Review #${index++}</h3>
-                <p><strong>${reviewData.name}</strong> (${reviewData.rating} Stars)</p>
-                <p>${reviewData.review}</p>
-                <p>Type: ${reviewData.reviewType}</p>
+            reviewRow.className = reviewClass;
+            reviewRow.innerHTML = `
+                <td>${reviewData.name}</td>
+                <td>${reviewData.rating}</td>
+                <td>${reviewData.review}</td>
+                <td>${reviewData.reviewType}</td>
             `;
 
-            reviewsList.appendChild(reviewElement);
+            reviewsTableBody.appendChild(reviewRow);
         }
     });
 }
