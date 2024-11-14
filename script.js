@@ -50,9 +50,14 @@ async function loadReviews() {
     const averageReviews = document.getElementById('average-reviews').querySelector('.reviews-list');
     const badReviews = document.getElementById('bad-reviews').querySelector('.reviews-list');
 
+    // Reset review counts and contents
     goodReviews.innerHTML = '';
     averageReviews.innerHTML = '';
     badReviews.innerHTML = '';
+
+    let goodCount = 0;
+    let averageCount = 0;
+    let badCount = 0;
 
     const reviewsQuery = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
 
@@ -61,7 +66,21 @@ async function loadReviews() {
         querySnapshot.forEach(doc => {
             const { name, rating, review } = doc.data();
             addReviewToSection(name, rating, review, goodReviews, averageReviews, badReviews);
+
+            // Count reviews
+            if (rating >= 4) {
+                goodCount++;
+            } else if (rating === 3) {
+                averageCount++;
+            } else {
+                badCount++;
+            }
         });
+
+        // Update counts in the UI
+        document.getElementById('good-count').textContent = goodCount;
+        document.getElementById('average-count').textContent = averageCount;
+        document.getElementById('bad-count').textContent = badCount;
     } catch (error) {
         console.error("Error loading reviews:", error);
     }
