@@ -18,6 +18,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const analytics = getAnalytics(app);
 
+// Function to handle review submission
 document.getElementById('reviewForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -31,20 +32,23 @@ document.getElementById('reviewForm').addEventListener('submit', async function(
         alert("Please fill all fields before submitting the review.");
     }
 
+    // Clear the form
     document.getElementById('name').value = '';
     document.getElementById('rating').value = '5';
     document.getElementById('review').value = '';
 });
 
+// Function to save the review to Firestore
 async function saveReview(name, rating, review) {
     try {
         await addDoc(collection(db, "reviews"), { name, rating, review, timestamp: new Date() });
-        loadReviews();
+        loadReviews(); // Reload the reviews after submission
     } catch (error) {
         console.error("Error adding review:", error);
     }
 }
 
+// Function to load reviews from Firestore
 async function loadReviews() {
     const goodReviews = document.getElementById('good-reviews').querySelector('.reviews-list');
     const averageReviews = document.getElementById('average-reviews').querySelector('.reviews-list');
@@ -67,7 +71,7 @@ async function loadReviews() {
             const { name, rating, review } = doc.data();
             addReviewToSection(name, rating, review, goodReviews, averageReviews, badReviews);
 
-            // Count reviews
+            // Count reviews based on rating
             if (rating >= 4) {
                 goodCount++;
             } else if (rating === 3) {
@@ -86,6 +90,7 @@ async function loadReviews() {
     }
 }
 
+// Function to categorize and add reviews to the UI
 function addReviewToSection(name, rating, review, goodSection, avgSection, badSection) {
     const reviewItem = document.createElement('div');
     reviewItem.classList.add('review-item');
@@ -100,4 +105,5 @@ function addReviewToSection(name, rating, review, goodSection, avgSection, badSe
     }
 }
 
+// Load reviews on page load
 window.onload = loadReviews;
