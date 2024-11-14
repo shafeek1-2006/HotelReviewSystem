@@ -66,14 +66,27 @@ button:hover {
     margin-top: 20px;
     padding: 10px;
     border-top: 1px solid #ddd;
+    position: relative;
 }
 
-h3 {
+.review-section h3 {
     color: #4CAF50;
     margin-top: 0;
     text-decoration: underline;
     text-decoration-color: #FF5733;
     text-underline-offset: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Style for review counts */
+.review-section h3 span {
+    background-color: #FF5733;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.9em;
 }
 
 .reviews-list {
@@ -81,9 +94,4 @@ h3 {
 }
 
 .review-item {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-    background-color: #f1f1f1;
-    border-radius: 5px;
-    margin: 5px 0;
-}
+    border-bottom
