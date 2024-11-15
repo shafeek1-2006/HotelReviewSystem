@@ -69,12 +69,12 @@ async function loadReviews() {
         const querySnapshot = await getDocs(reviewsQuery);
         querySnapshot.forEach(doc => {
             const { name, rating, review } = doc.data();
-            addReviewToSection(name, rating, review, goodReviews, averageReviews, badReviews);
+            categorizeAndAddReview(name, review, goodReviews, averageReviews, badReviews);
 
-            // Count reviews based on rating
-            if (rating >= 4) {
+            // Categorize review based on keywords in the content
+            if (isGoodReview(review)) {
                 goodCount++;
-            } else if (rating === 3) {
+            } else if (isAverageReview(review)) {
                 averageCount++;
             } else {
                 badCount++;
@@ -90,19 +90,54 @@ async function loadReviews() {
     }
 }
 
-// Function to categorize and add reviews to the UI
-function addReviewToSection(name, rating, review, goodSection, avgSection, badSection) {
+// Function to categorize and add reviews based on content
+function categorizeAndAddReview(name, review, goodSection, avgSection, badSection) {
     const reviewItem = document.createElement('div');
     reviewItem.classList.add('review-item');
-    reviewItem.innerHTML = `<h4>${name} - ${rating} Stars</h4><p>${review}</p>`;
+    reviewItem.innerHTML = `<h4>${name}</h4><p>${review}</p>`;
 
-    if (rating >= 4) {
+    if (isGoodReview(review)) {
         goodSection.appendChild(reviewItem);
-    } else if (rating === 3) {
+    } else if (isAverageReview(review)) {
         avgSection.appendChild(reviewItem);
     } else {
         badSection.appendChild(reviewItem);
     }
+}
+
+// Helper function to determine if a review is good
+function isGoodReview(review) {
+    const goodKeywords = [
+        "excellent", "amazing", "great", "fantastic", "perfect", 
+        "wonderful", "outstanding", "superb", "brilliant", "impressive",
+        "satisfied", "delighted", "awesome", "love", "incredible",
+        "exceptional", "positive", "top-notch", "pleasant", "enjoyed",
+        "splendid", "remarkable", "fabulous", "extraordinary", "marvelous"
+    ];
+    return goodKeywords.some(keyword => review.toLowerCase().includes(keyword));
+}
+
+// Helper function to determine if a review is average
+function isAverageReview(review) {
+    const averageKeywords = [
+        "okay", "fine", "average", "decent", "not bad", 
+        "satisfactory", "sufficient", "moderate", "fair", "acceptable",
+        "ordinary", "standard", "all right", "reasonable", "adequate",
+        "middling", "passable", "so-so", "tolerable", "unspectacular"
+    ];
+    return averageKeywords.some(keyword => review.toLowerCase().includes(keyword));
+}
+
+// Helper function to determine if a review is bad
+function isBadReview(review) {
+    const badKeywords = [
+        "bad", "terrible", "horrible", "poor", "awful", 
+        "disappointing", "dissatisfied", "worst", "unpleasant", "regret",
+        "negative", "inferior", "pathetic", "horrendous", "dreadful",
+        "subpar", "unacceptable", "deficient", "unsatisfactory", "mediocre",
+        "lousy", "unhappy", "fail", "poor quality", "problematic"
+    ];
+    return badKeywords.some(keyword => review.toLowerCase().includes(keyword));
 }
 
 // Load reviews on page load
