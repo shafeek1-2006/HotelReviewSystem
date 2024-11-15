@@ -69,15 +69,15 @@ async function loadReviews() {
         const querySnapshot = await getDocs(reviewsQuery);
         querySnapshot.forEach(doc => {
             const { name, rating, review } = doc.data();
-            categorizeAndAddReview(name, review, goodReviews, averageReviews, badReviews);
+            categorizeAndAddReview(name, rating, review, goodReviews, averageReviews, badReviews);
 
             // Categorize review based on keywords in the content
             if (isGoodReview(review)) {
                 goodCount++;
-            } else if (isAverageReview(review)) {
-                averageCount++;
-            } else {
+            } else if (isBadReview(review)) {
                 badCount++;
+            } else {
+                averageCount++;
             }
         });
 
@@ -91,17 +91,17 @@ async function loadReviews() {
 }
 
 // Function to categorize and add reviews based on content
-function categorizeAndAddReview(name, review, goodSection, avgSection, badSection) {
+function categorizeAndAddReview(name, rating, review, goodSection, avgSection, badSection) {
     const reviewItem = document.createElement('div');
     reviewItem.classList.add('review-item');
-    reviewItem.innerHTML = `<h4>${name}</h4><p>${review}</p>`;
+    reviewItem.innerHTML = `<h4>${name} - ${rating} Stars</h4><p>${review}</p>`;
 
     if (isGoodReview(review)) {
         goodSection.appendChild(reviewItem);
-    } else if (isAverageReview(review)) {
-        avgSection.appendChild(reviewItem);
-    } else {
+    } else if (isBadReview(review)) {
         badSection.appendChild(reviewItem);
+    } else {
+        avgSection.appendChild(reviewItem); // Default to average if no keywords match
     }
 }
 
@@ -112,7 +112,13 @@ function isGoodReview(review) {
         "wonderful", "outstanding", "superb", "brilliant", "impressive",
         "satisfied", "delighted", "awesome", "love", "incredible",
         "exceptional", "positive", "top-notch", "pleasant", "enjoyed",
-        "splendid", "remarkable", "fabulous", "extraordinary", "marvelous"
+        "splendid", "remarkable", "fabulous", "extraordinary", "marvelous",
+        "tasty", "delicious", "flavorful", "savory", "refreshing",
+        "affordable", "comfortable", "friendly", "helpful", "cozy",
+        "fast", "quick", "reliable", "neat", "clean",
+        "smooth", "polite", "beautiful", "stylish", "elegant",
+        "modern", "spacious", "organized", "well-maintained", "welcoming",
+        "impressive service", "top quality", "exquisite", "highly recommend", "memorable"
     ];
     return goodKeywords.some(keyword => review.toLowerCase().includes(keyword));
 }
@@ -123,7 +129,8 @@ function isAverageReview(review) {
         "okay", "fine", "average", "decent", "not bad", 
         "satisfactory", "sufficient", "moderate", "fair", "acceptable",
         "ordinary", "standard", "all right", "reasonable", "adequate",
-        "middling", "passable", "so-so", "tolerable", "unspectacular"
+        "middling", "passable", "so-so", "tolerable", "unspectacular",
+        "generic", "basic", "typical", "usual", "expected"
     ];
     return averageKeywords.some(keyword => review.toLowerCase().includes(keyword));
 }
@@ -135,7 +142,12 @@ function isBadReview(review) {
         "disappointing", "dissatisfied", "worst", "unpleasant", "regret",
         "negative", "inferior", "pathetic", "horrendous", "dreadful",
         "subpar", "unacceptable", "deficient", "unsatisfactory", "mediocre",
-        "lousy", "unhappy", "fail", "poor quality", "problematic"
+        "lousy", "unhappy", "fail", "poor quality", "problematic",
+        "dirty", "slow", "expensive", "unfriendly", "crowded",
+        "noisy", "rude", "uncomfortable", "confusing", "unreliable",
+        "boring", "broken", "inconvenient", "unresponsive", "outdated",
+        "unorganized", "faulty", "unhygienic", "overpriced", "cramped",
+        "stale", "bland", "cold food", "overcooked", "burnt"
     ];
     return badKeywords.some(keyword => review.toLowerCase().includes(keyword));
 }
