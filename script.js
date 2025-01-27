@@ -4,13 +4,13 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.21.0/firebase
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID",
-    measurementId: "YOUR_MEASUREMENT_ID"
+    apiKey: "AIzaSyASDqLWAJ6AEcpNUuwT2lSaPGGcHAkARSE",
+    authDomain: "hotel-review-system-15430.firebaseapp.com",
+    projectId: "hotel-review-system-15430",
+    storageBucket: "hotel-review-system-15430.appspot.com",
+    messagingSenderId: "31016766719",
+    appId: "1:31016766719:web:a1853a9e0a33e40113d0ca",
+    measurementId: "G-S4M0DB2MG9"
 };
 
 // Initialize Firebase
@@ -100,12 +100,4 @@ function categorizeAndAddReview(name, rating, review, goodSection, avgSection, b
     if (isGoodReview(review)) {
         goodSection.appendChild(reviewItem);
     } else if (isBadReview(review)) {
-        badSection.appendChild(reviewItem);
-    } else {
-        avgSection.appendChild(reviewItem); // Default to average if no keywords match
-    }
-}
-
-// Helper function to determine if a review is good
-function isGoodReview(review) {
-    const goodKeywords = [_{{{CITATION{{{_1{](https://github.com/agusID/dwsmarketplace/tree/eb551836513fdc844417a2172784d5112faefc69/views%2Fproduct%2Fproduct_detail.php)[_{{{CITATION{{{_2{](https://github.com/thinkful-ei-panda/seyi-bookmark-app/tree/5d3e3843d72886327b25d96c7a9f98b0bdc21355/scripts%2Ftemplate.js)
+        bad[_{{{CITATION{{{_1{](https://github.com/agusID/dwsmarketplace/tree/eb551836513fdc844417a2172784d5112faefc69/views%2Fproduct%2Fproduct_detail.php)[_{{{CITATION{{{_2{](https://github.com/thinkful-ei-panda/seyi-bookmark-app/tree/5d3e3843d72886327b25d96c7a9f98b0bdc21355/scripts%2Ftemplate.js)
