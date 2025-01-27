@@ -1,117 +1,95 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
     color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
     margin: 0;
+    padding: 0;
 }
 
 .container {
-    width: 100%;
-    max-width: 800px; /* Increased width for more content space */
-    padding: 30px;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
     background: #fff;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
-    border-radius: 12px; /* Increased border-radius for softer look */
-    transition: all 0.3s; /* Smooth transition for hover effects */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    animation: fadeIn 2s;
 }
 
-h1.title {
-    color: #FF5733; /* Colorful title */
+header {
     text-align: center;
-    font-size: 2.5em; /* Increased font size */
-    text-decoration: underline;
-    text-decoration-color: #4CAF50; /* Underline color */
-    text-underline-offset: 10px; /* Increased offset */
+    margin-bottom: 20px;
 }
 
-.welcome-message {
+header h1 {
+    color: #ff6347;
+    font-size: 2.5em;
+    margin: 0;
+}
+
+header p {
     font-size: 1.2em;
-    margin-bottom: 20px;
     color: #555;
-    text-align: center; /* Center-aligned message */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 form label {
-    display: block;
-    margin: 15px 0 8px;
     font-weight: bold;
 }
 
-input[type="text"], select, textarea {
-    width: 100%;
+form input, form select, form textarea, form button {
     padding: 10px;
-    margin-bottom: 15px;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 5px;
+    font-size: 1em;
 }
 
-button {
-    background-color: #4CAF50;
-    color: white;
+form button {
+    background: #28a745;
+    color: #fff;
     border: none;
-    padding: 12px;
     cursor: pointer;
-    width: 100%;
-    margin-top: 15px;
-    font-size: 1.1em;
-    transition: background-color 0.3s;
+    transition: background 0.3s;
 }
 
-button:hover {
-    background-color: #45a049;
+form button:hover {
+    background: #218838;
 }
 
-.review-section {
-    margin-top: 25px;
-    padding: 15px;
-    border-top: 2px solid #ddd; /* Thicker border */
-    position: relative;
+#reviews {
+    margin-top: 30px;
 }
 
-.review-section h3 {
-    color: #4CAF50;
-    margin-top: 0;
-    text-decoration: underline;
-    text-decoration-color: #FF5733;
-    text-underline-offset: 6px; /* Increased offset */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Style for review counts */
-.review-section h3 span {
-    background-color: #FF5733;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 15px; /* More rounded */
-    font-size: 1em; /* Increased font size */
-}
-
-.reviews-list {
-    margin-top: 15px;
-}
-
-.review-item {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
+#reviews h2 {
+    color: #28a745;
+    font-size: 2em;
     margin-bottom: 10px;
 }
 
-/* Animation for form submission */
+.review {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review h3 {
+    margin: 0;
+    color: #555;
+}
+
+.review p {
+    margin: 5px 0 0;
+    color: #777;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
-}
-
-.review-item {
-    animation: fadeIn 0.5s ease-in;
-}
-
-.container:hover {
-    transform: scale(1.02); /* Slight zoom effect on hover */
 }
