@@ -4,13 +4,13 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.21.0/firebase
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyASDqLWAJ6AEcpNUuwT2lSaPGGcHAkARSE",
-    authDomain: "hotel-review-system-15430.firebaseapp.com",
-    projectId: "hotel-review-system-15430",
-    storageBucket: "hotel-review-system-15430.appspot.com",
-    messagingSenderId: "31016766719",
-    appId: "1:31016766719:web:a1853a9e0a33e40113d0ca",
-    measurementId: "G-S4M0DB2MG9"
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID",
+    measurementId: "YOUR_MEASUREMENT_ID"
 };
 
 // Initialize Firebase
@@ -28,6 +28,7 @@ document.getElementById('reviewForm').addEventListener('submit', async function(
 
     if (name && review && rating) {
         await saveReview(name, rating, review);
+        showSuccessMessage(); // Show success message upon submission
     } else {
         alert("Please fill all fields before submitting the review.");
     }
@@ -107,50 +108,4 @@ function categorizeAndAddReview(name, rating, review, goodSection, avgSection, b
 
 // Helper function to determine if a review is good
 function isGoodReview(review) {
-    const goodKeywords = [
-        "excellent", "amazing", "great", "fantastic", "perfect", 
-        "wonderful", "outstanding", "superb", "brilliant", "impressive",
-        "satisfied", "delighted", "awesome", "love", "incredible",
-        "exceptional", "positive", "top-notch", "pleasant", "enjoyed",
-        "splendid", "remarkable", "fabulous", "extraordinary", "marvelous",
-        "tasty", "delicious", "flavorful", "savory", "refreshing",
-        "affordable", "comfortable", "friendly", "helpful", "cozy",
-        "fast", "quick", "reliable", "neat", "clean",
-        "smooth", "polite", "beautiful", "stylish", "elegant",
-        "modern", "spacious", "organized", "well-maintained", "welcoming",
-        "impressive service", "top quality", "exquisite", "highly recommend", "memorable"
-    ];
-    return goodKeywords.some(keyword => review.toLowerCase().includes(keyword));
-}
-
-// Helper function to determine if a review is average
-function isAverageReview(review) {
-    const averageKeywords = [
-        "okay", "fine", "average", "decent", "not bad", 
-        "satisfactory", "sufficient", "moderate", "fair", "acceptable",
-        "ordinary", "standard", "all right", "reasonable", "adequate",
-        "middling", "passable", "so-so", "tolerable", "unspectacular",
-        "generic", "basic", "typical", "usual", "expected"
-    ];
-    return averageKeywords.some(keyword => review.toLowerCase().includes(keyword));
-}
-
-// Helper function to determine if a review is bad
-function isBadReview(review) {
-    const badKeywords = [
-        "bad", "terrible", "horrible", "poor", "awful", 
-        "disappointing", "dissatisfied", "worst", "unpleasant", "regret",
-        "negative", "inferior", "pathetic", "horrendous", "dreadful",
-        "subpar", "unacceptable", "deficient", "unsatisfactory", "mediocre",
-        "lousy", "unhappy", "fail", "poor quality", "problematic",
-        "dirty", "slow", "expensive", "unfriendly", "crowded",
-        "noisy", "rude", "uncomfortable", "confusing", "unreliable",
-        "boring", "broken", "inconvenient", "unresponsive", "outdated",
-        "unorganized", "faulty", "unhygienic", "overpriced", "cramped",
-        "stale", "bland", "cold food", "overcooked", "burnt"
-    ];
-    return badKeywords.some(keyword => review.toLowerCase().includes(keyword));
-}
-
-// Load reviews on page load
-window.onload = loadReviews;
+    const goodKeywords = [_{{{CITATION{{{_1{](https://github.com/agusID/dwsmarketplace/tree/eb551836513fdc844417a2172784d5112faefc69/views%2Fproduct%2Fproduct_detail.php)[_{{{CITATION{{{_2{](https://github.com/thinkful-ei-panda/seyi-bookmark-app/tree/5d3e3843d72886327b25d96c7a9f98b0bdc21355/scripts%2Ftemplate.js)
