@@ -11,50 +11,53 @@ body {
 
 .container {
     width: 100%;
-    max-width: 600px;
-    padding: 20px;
+    max-width: 800px; /* Increased width for more content space */
+    padding: 30px;
     background: #fff;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+    border-radius: 12px; /* Increased border-radius for softer look */
+    transition: all 0.3s; /* Smooth transition for hover effects */
 }
 
 h1.title {
     color: #FF5733; /* Colorful title */
     text-align: center;
-    font-size: 2em;
+    font-size: 2.5em; /* Increased font size */
     text-decoration: underline;
     text-decoration-color: #4CAF50; /* Underline color */
-    text-underline-offset: 8px;
+    text-underline-offset: 10px; /* Increased offset */
 }
 
 .welcome-message {
-    font-size: 1.1em;
-    margin-bottom: 15px;
+    font-size: 1.2em;
+    margin-bottom: 20px;
     color: #555;
+    text-align: center; /* Center-aligned message */
 }
 
 form label {
     display: block;
-    margin: 10px 0 5px;
+    margin: 15px 0 8px;
     font-weight: bold;
 }
 
 input[type="text"], select, textarea {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 button {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 12px;
     cursor: pointer;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 15px;
+    font-size: 1.1em;
     transition: background-color 0.3s;
 }
 
@@ -63,9 +66,9 @@ button:hover {
 }
 
 .review-section {
-    margin-top: 20px;
-    padding: 10px;
-    border-top: 1px solid #ddd;
+    margin-top: 25px;
+    padding: 15px;
+    border-top: 2px solid #ddd; /* Thicker border */
     position: relative;
 }
 
@@ -74,7 +77,7 @@ button:hover {
     margin-top: 0;
     text-decoration: underline;
     text-decoration-color: #FF5733;
-    text-underline-offset: 4px;
+    text-underline-offset: 6px; /* Increased offset */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -84,14 +87,31 @@ button:hover {
 .review-section h3 span {
     background-color: #FF5733;
     color: white;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.9em;
+    padding: 6px 12px;
+    border-radius: 15px; /* More rounded */
+    font-size: 1em; /* Increased font size */
 }
 
 .reviews-list {
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .review-item {
-    border-bottom
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+/* Animation for form submission */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.review-item {
+    animation: fadeIn 0.5s ease-in;
+}
+
+.container:hover {
+    transform: scale(1.02); /* Slight zoom effect on hover */
+}
