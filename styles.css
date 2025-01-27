@@ -65,13 +65,23 @@ form button:hover {
     margin-top: 30px;
 }
 
-#reviews h2 {
-    color: #28a745;
-    font-size: 2em;
-    margin-bottom: 10px;
+.review-section {
+    margin-top: 20px;
 }
 
-.review {
+.review-section h3 {
+    color: #28a745;
+    font-size: 1.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review-section .reviews-list {
+    margin-top: 10px;
+}
+
+.review-item {
     background: #f9f9f9;
     padding: 10px;
     border-radius: 5px;
@@ -79,12 +89,12 @@ form button:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.review h3 {
+.review-item h4 {
     margin: 0;
     color: #555;
 }
 
-.review p {
+.review-item p {
     margin: 5px 0 0;
     color: #777;
 }
