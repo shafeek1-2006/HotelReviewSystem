@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Firebase SDK - Modular version -->
     <script type="module" src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
+    <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script> <!-- Include NLP library -->
 </head>
 <body>
     <div class="container">
@@ -50,6 +52,9 @@
                 <div class="reviews-list"></div>
             </div>
         </div>
+
+        <h2>Review Trends</h2>
+        <canvas id="reviewTrendsChart"></canvas>
     </div>
 </body>
 </html>
