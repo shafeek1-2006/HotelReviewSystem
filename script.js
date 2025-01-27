@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-analytics.js";
+import nlp from 'https://unpkg.com/compromise@latest/builds/compromise.min.js'; // Import NLP library
 
 // Firebase configuration
 const firebaseConfig = {
@@ -72,10 +73,11 @@ async function loadReviews() {
             const { name, rating, review } = doc.data();
             categorizeAndAddReview(name, rating, review, goodReviews, averageReviews, badReviews);
 
-            // Categorize review based on keywords in the content
-            if (isGoodReview(review)) {
+            // Categorize review based on sentiment analysis
+            const sentiment = analyzeSentiment(review);
+            if (sentiment === 'positive') {
                 goodCount++;
-            } else if (isBadReview(review)) {
+            } else if (sentiment === 'negative') {
                 badCount++;
             } else {
                 averageCount++;
@@ -86,18 +88,6 @@ async function loadReviews() {
         document.getElementById('good-count').textContent = goodCount;
         document.getElementById('average-count').textContent = averageCount;
         document.getElementById('bad-count').textContent = badCount;
-    } catch (error) {
-        console.error("Error loading reviews:", error);
-    }
-}
 
-// Function to categorize and add reviews based on content
-function categorizeAndAddReview(name, rating, review, goodSection, avgSection, badSection) {
-    const reviewItem = document.createElement('div');
-    reviewItem.classList.add('review-item');
-    reviewItem.innerHTML = `<h4>${name} - ${rating} Stars</h4><p>${review}</p>`;
-
-    if (isGoodReview(review)) {
-        goodSection.appendChild(reviewItem);
-    } else if (isBadReview(review)) {
-        bad[_{{{CITATION{{{_1{](https://github.com/agusID/dwsmarketplace/tree/eb551836513fdc844417a2172784d5112faefc69/views%2Fproduct%2Fproduct_detail.php)[_{{{CITATION{{{_2{](https://github.com/thinkful-ei-panda/seyi-bookmark-app/tree/5d3e3843d72886327b25d96c7a9f98b0bdc21355/scripts%2Ftemplate.js)
+        // Generate review trends chart
+        generateReviewTrendsChart[_{{{CITATION{{{_1{](https://github.com/agusID/dwsmarketplace/tree/eb551836513fdc844417a2172784d5112faefc69/views%2Fproduct%2Fproduct_detail.php)[_{{{CITATION{{{_2{](https://github.com/thinkful-ei-panda/seyi-bookmark-app/tree/5d3e3843d72886327b25d96c7a9f98b0bdc21355/scripts%2Ftemplate.js)
